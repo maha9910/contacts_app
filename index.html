@@ -64,11 +64,13 @@
         <ul class="space-y-4">
           <li
             class="flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-sm"
+            v-for="(contact, id) in contacts"
+            :key="contact.id"
           >
             <div>
-              <p class="text-lg font-semibold">Name</p>
-              <p class="text-gray-600">phone</p>
-              <p class="text-gray-600">email</p>
+              <p class="text-lg font-semibold">{{ contact.name }}</p>
+              <p class="text-gray-600">{{ contact.phone }}</p>
+              <p class="text-gray-600">{{ contact.email }}</p>
             </div>
             <div class="flex space-x-2">
               <button
@@ -90,16 +92,23 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
     <script>
-      localStorage.contacts = JSON.stringify([
-        {
-          id: Date.now(),
-          name: "John Doe",
-          phone: 465785921,
-          email: "john.d@gmail.com",
-        },
-      ]);
+      // localStorage.contacts = JSON.stringify([
+      //  {
+      //     id: Date.now(),
+      //     name: "John Doe",
+      //     phone: 465785921,
+      //      email: "john.d@gmail.com",
+      //   },
+      // ]);
 
-      Vue.createApp({}).mount("#app");
+      Vue.createApp({
+        data() {
+          return {
+            contacts: JSON.parse(localStorage.getItem("contacts")) || [],
+            newContact: { id: Date.now(), name: "", phone: null, email: null },
+          };
+        },
+      }).mount("#app");
     </script>
   </body>
 </html>
